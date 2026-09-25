@@ -1,12 +1,13 @@
 # Ticket Hub next work
 
-**2026-09-25 — presentation-site publishing (workflow prepared; activation pending).**
-`.github/workflows/pages.yml` now validates and publishes only `web/` from `develop`, following the
-neighboring Lexicon repository's Pages workflow. The intended domain is
-`tickethub.robertvokac.com`. The owner unarchived the repository; the available GitHub connection has
-no administrator permission. An administrator must select GitHub Actions as the Pages source and save
-the custom domain in repository settings. A push to `develop` will trigger deployment; live deployment
-has not been verified.
+**2026-09-25 — presentation-site publishing (pushed; Pages activation pending).**
+`.github/workflows/pages.yml` validates and publishes only `web/` from `develop`, following the
+neighboring Lexicon repository's Pages workflow. Commit `cd05c06` reached `develop`. Its Pages run
+passed the static-site check, then failed in `actions/configure-pages@v5` because Pages is not enabled
+for the repository. The available GitHub connection has no administrator permission. An administrator
+must select GitHub Actions as the Pages source and save `tickethub.robertvokac.com` as the custom domain
+in repository settings. Rerun the failed Pages workflow after those settings are saved and verify the
+live site.
 
 **2026-09-25 — web directory split (done).** The Crow application assets moved from `web/` to
 `ticket-hub-web/`, with matching runtime, CMake install, Docker, Compose, and E2E paths. A separate

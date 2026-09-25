@@ -6,10 +6,17 @@
   The Ticket Hub repository's GitHub metadata reports `develop` as the default branch.
 - The new workflow validates the static presentation site, uploads `web/` as the Pages artifact, and
   deploys through `actions/deploy-pages@v4` with the required Pages and OIDC permissions.
-- The owner unarchived the repository after the workflow was prepared. The connected GitHub account
-  has push access but no administrator access, so GitHub Pages source/custom-domain settings cannot be
-  changed from this session. The intended domain is `tickethub.robertvokac.com`; DNS was reported as
-  already configured by the owner but could not be checked here.
+- The owner unarchived the repository after the workflow was prepared. Commit `cd05c06` was pushed to
+  `develop`; [the Pages run](https://github.com/robertvokac/ticket-hub/actions/runs/36116285761)
+  passed checkout and the static-site check, but `actions/configure-pages@v5` failed with “Get Pages
+  site failed ... Not Found”. Pages must first be enabled with GitHub Actions as the source. The connected
+  GitHub account has no administrator access, so it cannot change Pages source/custom-domain settings.
+  `getent ahosts tickethub.robertvokac.com` resolved to GitHub Pages addresses, including
+  `robertvokac.github.io`. The HTTPS endpoint did not yet present a certificate for the custom domain;
+  live site verification remains pending.
+- The push also ran `Verify`: its SQLite and all-adapters C++ jobs passed. Its browser/accessibility job
+  failed on existing ticket-drawer axe violations; the same targets appear in the preceding commit's
+  browser job. This is separate from the Pages deployment failure.
 - No database migration or product runtime change was made in this batch.
 
 ## 2026-09-25 — Application UI move and static presentation site
