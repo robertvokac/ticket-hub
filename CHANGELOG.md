@@ -3,8 +3,8 @@
 ## Unreleased — Separate presentation site (2026-09-25)
 
 - Added a GitHub Pages workflow, following Lexicon's static-site deployment pattern: it validates and
-  uploads only `web/` from `develop`. The intended custom domain is `tickethub.robertvokac.com`, to be
-  configured in GitHub Pages repository settings.
+  uploads only `web/` from `develop`. It is live at <https://tickethub.robertvokac.com/>.
+- Added canonical URLs for all five presentation pages on the custom domain.
 - Renamed the Crow-served UI directory from `web/` to `ticket-hub-web/` and updated the runtime default,
   CMake installation, Docker/Compose configuration, and E2E launcher. Operators who set
   `TICKETHUB_WEB_ROOT` explicitly to the old directory must point it to `ticket-hub-web/` after upgrade.

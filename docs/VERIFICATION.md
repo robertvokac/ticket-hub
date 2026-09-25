@@ -6,14 +6,16 @@
   The Ticket Hub repository's GitHub metadata reports `develop` as the default branch.
 - The new workflow validates the static presentation site, uploads `web/` as the Pages artifact, and
   deploys through `actions/deploy-pages@v4` with the required Pages and OIDC permissions.
-- The owner unarchived the repository after the workflow was prepared. Commit `cd05c06` was pushed to
-  `develop`; [the Pages run](https://github.com/robertvokac/ticket-hub/actions/runs/36116285761)
-  passed checkout and the static-site check, but `actions/configure-pages@v5` failed with “Get Pages
-  site failed ... Not Found”. Pages must first be enabled with GitHub Actions as the source. The connected
-  GitHub account has no administrator access, so it cannot change Pages source/custom-domain settings.
-  `getent ahosts tickethub.robertvokac.com` resolved to GitHub Pages addresses, including
-  `robertvokac.github.io`. The HTTPS endpoint did not yet present a certificate for the custom domain;
-  live site verification remains pending.
+- The owner unarchived the repository. The [first Pages run](https://github.com/robertvokac/ticket-hub/actions/runs/36116285761)
+  passed the static-site check but could not find an enabled Pages site. After the owner enabled Pages
+  with GitHub Actions as the source and saved the custom domain, commit `c6cb7b5` triggered a
+  [successful Pages run](https://github.com/robertvokac/ticket-hub/actions/runs/36116973667): checkout,
+  static-site validation, Pages configuration, artifact upload, and deployment all passed.
+- `getent ahosts tickethub.robertvokac.com` resolved to GitHub Pages addresses. HTTPS returned 200 with
+  a valid certificate, and the live home page contained the Ticket Hub title and canonical domain URL.
+  The screenshot asset `/assets/ticket-detail.png` also returned 200 with `image/png` and its expected
+  169845-byte length. Plain HTTP returned 200 without an HTTPS redirect; the owner can enable **Enforce
+  HTTPS** in the repository's Pages settings if an automatic redirect is desired.
 - The push also ran `Verify`: its SQLite and all-adapters C++ jobs passed. Its browser/accessibility job
   failed on existing ticket-drawer axe violations; the same targets appear in the preceding commit's
   browser job. This is separate from the Pages deployment failure.

@@ -15,9 +15,9 @@ Main namespace: `TicketHub`.
   `python3 -m http.server 8000 --directory web` and open `http://127.0.0.1:8000/`.
 
 The [Pages workflow](.github/workflows/pages.yml) publishes only `web/` from the `develop` branch to
-GitHub Pages, automatically after changes to the site or workflow and on manual dispatch. The intended
-address is `https://tickethub.robertvokac.com/`. In the repository's **Settings → Pages**, select
-**GitHub Actions** as the publishing source and set **Custom domain** to
+GitHub Pages, automatically after changes to the site or workflow and on manual dispatch. The live
+address is <https://tickethub.robertvokac.com/>. In the repository's **Settings → Pages**, keep
+**GitHub Actions** as the publishing source and **Custom domain** set to
 `tickethub.robertvokac.com`. DNS is managed separately. With an Actions publishing source GitHub ignores
 `CNAME` files; the custom domain must be saved in Pages settings.
 
