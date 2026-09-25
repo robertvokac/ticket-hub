@@ -7,7 +7,7 @@ E2E_DATABASE="${TMPDIR:-/tmp}/ticket-hub-e2e-${RANDOM}-${RANDOM}.sqlite3"
 exec env \
   TICKETHUB_DB_DRIVER=sqlite \
   TICKETHUB_SQLITE_PATH="$E2E_DATABASE" \
-  TICKETHUB_WEB_ROOT="$PWD/web" \
+  TICKETHUB_WEB_ROOT="$PWD/ticket-hub-web" \
   TICKETHUB_MIGRATIONS_ROOT="$PWD/migrations" \
   TICKETHUB_ATTACHMENTS_DIR="${TMPDIR:-/tmp}/ticket-hub-e2e-attachments-${RANDOM}-${RANDOM}" \
   TICKETHUB_BIND_ADDRESS=127.0.0.1 \

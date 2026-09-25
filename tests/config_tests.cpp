@@ -38,6 +38,7 @@ void clearEnvironment() {
     setEnv("TICKETHUB_SEED_DEMO", nullptr);
     setEnv("TICKETHUB_ALLOW_UNSAFE_DEMO_SEED", nullptr);
     setEnv("TICKETHUB_BIND_ADDRESS", nullptr);
+    setEnv("TICKETHUB_WEB_ROOT", nullptr);
 }
 
 bool seedingRejected(const TicketHub::Config::AppConfig& config) {
@@ -61,6 +62,7 @@ int main() {
             "demo seeding is OFF by default -- it creates a global administrator with a published password");
     require(!defaults.allowUnsafeDemoSeed, "the unsafe-seed acknowledgement is OFF by default");
     require(defaults.bindAddress == "127.0.0.1", "the default bind address is loopback-only");
+    require(defaults.webRoot == "./ticket-hub-web", "the default web root points to the application assets");
 
     // --- Loopback detection ---
     AppConfig config;

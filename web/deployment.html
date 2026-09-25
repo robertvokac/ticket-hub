@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Deploy Ticket Hub with Docker Compose, create the first administrator, and review the essential operational requirements.">
+  <title>Deployment — Ticket Hub</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="site.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Ticket Hub — home"><span class="brand-mark" aria-hidden="true">TH</span><span>Ticket Hub</span></a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation"><a href="index.html">Home</a><a href="features.html">Features</a><a href="tour.html">Tour</a><a href="deployment.html" aria-current="page">Deployment</a><a href="about.html">About</a><a class="nav-cta" href="https://github.com/robertvokac/ticket-hub">Source code ↗</a></nav>
+    </div>
+  </header>
+  <main id="main">
+    <section class="page-hero"><div class="container"><p class="eyebrow light">Your own instance</p><h1>From repository to first project</h1><p class="lead">The supported distribution path uses Docker Compose and PostgreSQL. A fresh installation has no users; create the first administrator with the command-line tool.</p></div></section>
+    <section class="section section-soft"><div class="container"><div class="section-head"><p class="eyebrow">Getting started</p><h2>Four steps to a running instance</h2><p>For TLS proxy, backup, and production requirements, follow the repository's deployment documentation. These steps assume Docker with Compose is installed.</p></div>
+      <div class="steps">
+        <article class="step"><div><h3>Get the source</h3><p>Clone the repository and open its root directory.</p><pre class="code-block"><code>git clone https://github.com/robertvokac/ticket-hub.git
+cd ticket-hub</code></pre></div></article>
+        <article class="step"><div><h3>Set a database password</h3><p>Copy the sample configuration to <code>.env</code>. Before starting, replace <code>TICKETHUB_POSTGRES_PASSWORD</code> with a strong, unique password. Keep the <code>.env</code> file out of version control.</p><pre class="code-block"><code>cp .env.example .env</code></pre></div></article>
+        <article class="step"><div><h3>Start the service</h3><p>Compose builds the image, starts PostgreSQL, and then starts Ticket Hub. By default, HTTP is available only at <code>127.0.0.1:8080</code>.</p><pre class="code-block"><code>docker compose up -d --build</code></pre></div></article>
+        <article class="step"><div><h3>Create the first administrator</h3><p>There is no public sign-up. Use a real email address, a name, and a long unique password. Run this in a trusted environment: a supplied password may be recorded in shell history.</p><pre class="code-block"><code>docker compose exec ticket-hub ticket-hub-cli create-user \
+  "you@example.com" "Your Name" "a sufficiently long password" --admin</code></pre></div></article>
+      </div>
+      <div class="aside-note spaced-note"><strong>Before exposing it publicly</strong><p>Put a TLS reverse proxy in front of the loopback HTTP port and configure a request body size limit there. The deployment guide covers the remaining production requirements.</p></div>
+      <p class="spaced-note"><a class="text-link" href="https://github.com/robertvokac/ticket-hub/blob/main/docs/DEPLOYMENT.md">Read the full deployment guide ↗</a></p>
+    </div></section>
+    <section class="section"><div class="container split"><div><p class="eyebrow">Operating choices</p><h2>Choose the database for your installation</h2><p class="lead">PostgreSQL is the primary production database. SQLite offers the same user-facing features for a smaller setup with a single server process. There is no built-in migration tool between the two databases.</p><p>Attachments are stored on the local filesystem. Backups combine a database dump with the attachment directory; restore during a maintenance window.</p><a class="text-link" href="https://github.com/robertvokac/ticket-hub/blob/main/README.md">Read the README ↗</a></div><dl class="fact-grid"><div class="fact"><dt>Primary database</dt><dd>PostgreSQL</dd></div><div class="fact"><dt>Smaller setups</dt><dd>SQLite, one process</dd></div><div class="fact"><dt>Distribution</dt><dd>Docker + Compose</dd></div><div class="fact"><dt>Attachments</dt><dd>Local filesystem</dd></div></dl></div></section>
+    <section class="section section-soft"><div class="container narrow"><div class="section-head"><p class="eyebrow">Common questions</p><h2>Before you deploy</h2></div><div class="faq">
+      <details><summary>Can people sign up themselves?</summary><p>No. An administrator creates accounts in the app or with the command-line tool. Demo accounts are for local development only.</p></details>
+      <details><summary>Can I switch from SQLite to PostgreSQL later?</summary><p>Ticket Hub does not currently include a built-in data migration tool between these databases. Choose the backend before adding production data.</p></details>
+      <details><summary>Does the app send email itself?</summary><p>Optional SMTP delivery uses a durable outbox. The HTTP server does not send messages; a separate process runs the <code>process-outbox</code> administration command.</p></details>
+      <details><summary>Do I need a reverse proxy?</summary><p>For access beyond the local machine, use a TLS reverse proxy. Set a request body size limit as described in the deployment documentation.</p></details>
+    </div></div></section>
+  </main>
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">TH</span><span>Ticket Hub</span></a><p>Self-hosted ticket tracking for software teams. Open source under the MIT license.</p></div>
+      <div><h2>Explore</h2><ul><li><a href="features.html">Features</a></li><li><a href="tour.html">Tour</a></li><li><a href="deployment.html">Deployment</a></li></ul></div>
+      <div><h2>Project</h2><ul><li><a href="about.html">About</a></li><li><a href="https://github.com/robertvokac/ticket-hub">GitHub ↗</a></li><li><a href="https://github.com/robertvokac/ticket-hub/blob/main/LICENSE">MIT license ↗</a></li></ul></div>
+    </div>
+    <div class="container footer-bottom">© 2026 Ticket Hub · Open source · MIT license</div>
+  </footer>
+</body>
+</html>

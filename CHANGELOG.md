@@ -1,5 +1,21 @@
 # Changelog
 
+## Unreleased — Separate presentation site (2026-09-25)
+
+- Added a GitHub Pages workflow, following Lexicon's static-site deployment pattern: it validates and
+  uploads only `web/` from `develop`. The intended custom domain is `tickethub.robertvokac.com`, to be
+  configured in GitHub Pages repository settings.
+- Renamed the Crow-served UI directory from `web/` to `ticket-hub-web/` and updated the runtime default,
+  CMake installation, Docker/Compose configuration, and E2E launcher. Operators who set
+  `TICKETHUB_WEB_ROOT` explicitly to the old directory must point it to `ticket-hub-web/` after upgrade.
+- Added a separate five-page English presentation site in `web/`, built with static HTML, CSS, and vanilla
+  JavaScript. Its pages use English filenames and URLs. It uses screenshots of the existing application
+  and documents its present feature scope.
+- Removed forced screenshot aspect ratios, cropping, and hover zoom from the presentation site's CSS so
+  each image keeps its source proportions at every viewport width.
+- Added a static-site link and landmark check plus a configuration-default regression assertion. No
+  database migration.
+
 ## Unreleased — Security audit remediation (2026-08-26)
 
 An external security audit of the network-facing surface reported 2 critical, 3 high, 5 medium and 6 low

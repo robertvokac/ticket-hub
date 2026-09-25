@@ -24,7 +24,7 @@ struct User {
     std::optional<std::string> handle;
     // Self-service via TicketService::updatePreferences (D45): an IANA zone
     // name (e.g. "America/New_York") and "12h"/"24h". "Browser auto-detect"
-    // is a client-only concern (web/app.js tracks, per browser via
+    // is a client-only concern (ticket-hub-web/app.js tracks, per browser via
     // localStorage, whether this browser has already auto-detected or the
     // user has manually overridden) -- the server has no "unset" sentinel
     // and treats every value the same regardless of how it got there.

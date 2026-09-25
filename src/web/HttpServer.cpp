@@ -45,7 +45,7 @@ crow::response staticResponse(const std::string& path, const std::string& conten
 // clause -- it blocks any injected/inline `<script>` from executing at all,
 // a second layer of defense behind the app's own Markdown-HTML sanitization
 // and the sandboxed attachment-preview iframes. `style-src` allows
-// `'unsafe-inline'` because `web/app.js` renders many inline `style="..."`
+// `'unsafe-inline'` because `ticket-hub-web/app.js` renders many inline `style="..."`
 // attributes (layout tweaks, not user-controlled content) and reworking
 // that to CSS classes is out of scope for this hardening pass -- inline
 // styles cannot execute script, so this is a low-risk, deliberate
@@ -102,7 +102,7 @@ void runHttpServer(const Config::AppConfig& config,
         return response;
     });
     // Jira-style direct ticket links (e.g. /browse/TH-123): serves the exact
-    // same single-page app shell as "/" -- `web/app.js` reads the ticket key
+    // same single-page app shell as "/" -- `ticket-hub-web/app.js` reads the ticket key
     // out of the URL on load (and keeps the URL in sync via
     // history.pushState as the user navigates) so a bookmarked/shared link
     // opens straight to that ticket. The `<string>` segment is never used

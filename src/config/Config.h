@@ -30,7 +30,7 @@ struct AppConfig {
     // something that says "unsafe" to get past the guard.
     bool allowUnsafeDemoSeed{false};
     // webRoot/migrationsRoot/attachmentsRoot default relative to the process's
-    // current working directory (./web, ./migrations, ./data/attachments), not
+    // current working directory (./ticket-hub-web, ./migrations, ./data/attachments), not
     // a compiled-in path -- so both the dev build (run from the repo root) and
     // an installed tree (run from the `cmake --install` prefix) pick up the
     // right files just by cd-ing there first. Override with

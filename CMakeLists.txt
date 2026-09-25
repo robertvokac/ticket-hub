@@ -126,7 +126,7 @@ if(TICKETHUB_BUILD_SERVER)
     endif()
 
     install(TARGETS ticket-hub RUNTIME DESTINATION bin)
-    install(DIRECTORY web/ DESTINATION share/ticket-hub/web)
+    install(DIRECTORY ticket-hub-web/ DESTINATION share/ticket-hub/ticket-hub-web)
 endif()
 
 if(TICKETHUB_BUILD_SERVER OR TICKETHUB_BUILD_CLI)
@@ -135,6 +135,13 @@ endif()
 
 if(TICKETHUB_BUILD_TESTS)
     enable_testing()
+
+    find_package(Python3 COMPONENTS Interpreter QUIET)
+    if(Python3_Interpreter_FOUND)
+        add_test(NAME ticket-hub-presentation-tests
+                 COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/presentation_site_tests.py
+                         ${CMAKE_CURRENT_SOURCE_DIR}/web)
+    endif()
 
     add_executable(ticket-hub-domain-tests tests/domain_validation_tests.cpp)
     target_link_libraries(ticket-hub-domain-tests PRIVATE ticket-hub-core)

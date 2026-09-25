@@ -63,7 +63,7 @@ services:
       TICKETHUB_DB_DRIVER: postgres
       TICKETHUB_DATABASE_URL: "host=postgres port=5432 dbname=${TICKETHUB_POSTGRES_DB:-tickethub} user=${TICKETHUB_POSTGRES_USER:-tickethub} password=${TICKETHUB_POSTGRES_PASSWORD}"
       TICKETHUB_POSTGRES_PASSWORD: ${TICKETHUB_POSTGRES_PASSWORD}
-      TICKETHUB_WEB_ROOT: /opt/ticket-hub/share/ticket-hub/web
+      TICKETHUB_WEB_ROOT: /opt/ticket-hub/share/ticket-hub/ticket-hub-web
       TICKETHUB_MIGRATIONS_ROOT: /opt/ticket-hub/share/ticket-hub/migrations
       TICKETHUB_ATTACHMENTS_DIR: /data/attachments
       TICKETHUB_SMTP_HOST: ${TICKETHUB_SMTP_HOST:-}

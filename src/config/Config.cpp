@@ -44,7 +44,7 @@ AppConfig AppConfig::fromEnvironment() {
     config.autoMigrate = envBool("TICKETHUB_AUTO_MIGRATE", config.autoMigrate);
     config.seedDemo = envBool("TICKETHUB_SEED_DEMO", config.seedDemo);
     config.allowUnsafeDemoSeed = envBool("TICKETHUB_ALLOW_UNSAFE_DEMO_SEED", config.allowUnsafeDemoSeed);
-    config.webRoot = envOr("TICKETHUB_WEB_ROOT", "./web");
+    config.webRoot = envOr("TICKETHUB_WEB_ROOT", "./ticket-hub-web");
     config.migrationsRoot = envOr("TICKETHUB_MIGRATIONS_ROOT", "./migrations");
     config.attachmentsRoot = envOr("TICKETHUB_ATTACHMENTS_DIR", "./data/attachments");
     const auto maxTotalText =

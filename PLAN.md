@@ -1,5 +1,9 @@
 # Ticket Hub plan
 
+**2026-09-25 location update:** the application UI is in `ticket-hub-web/`; `web/` now contains the
+separate presentation site. Older entries below that mention `web/` refer to the former location of the
+application UI.
+
 The authoritative, continuously updated plan is [NEXT.md](NEXT.md); the phased roadmap it tracks against
 is [docs/REDUCED_SCOPE_ROADMAP.md](docs/REDUCED_SCOPE_ROADMAP.md) (the original
 [docs/ROADMAP.md](docs/ROADMAP.md) is long-term reference only). This file is a short pointer plus a

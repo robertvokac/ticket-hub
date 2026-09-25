@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore Ticket Hub features: tickets, Kanban, backlog, collaboration, search, administration, and integrations.">
+  <title>Features — Ticket Hub</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="site.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Ticket Hub — home"><span class="brand-mark" aria-hidden="true">TH</span><span>Ticket Hub</span></a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation"><a href="index.html">Home</a><a href="features.html" aria-current="page">Features</a><a href="tour.html">Tour</a><a href="deployment.html">Deployment</a><a href="about.html">About</a><a class="nav-cta" href="https://github.com/robertvokac/ticket-hub">Source code ↗</a></nav>
+    </div>
+  </header>
+  <main id="main">
+    <section class="page-hero"><div class="container"><p class="eyebrow light">What it does</p><h1>Teamwork, from overview to detail</h1><p class="lead">Ticket Hub brings work tracking, collaboration, and installation management together. These are features available in the current project.</p></div></section>
+    <nav class="subnav" aria-label="Feature sections"><div class="container"><a href="#tickets">Tickets</a><a href="#planning">Planning</a><a href="#collaboration">Collaboration</a><a href="#administration">Administration</a></div></nav>
+    <section class="section" aria-label="Features"><div class="container">
+      <div class="feature-group" id="tickets"><div><p class="eyebrow">01 / Foundation</p><h2>Tickets</h2><p>Every piece of work has a stable key, a status, and a history.</p></div><div class="feature-list">
+        <article><h3>Five types, clear hierarchy</h3><p>Epic, Story, Task, Bug, and Sub-task. A Sub-task belongs to a parent in the same project; a standard ticket can belong to an Epic.</p></article>
+        <article><h3>Descriptions and planning</h3><p>Markdown, checklists, priority, labels, component, Story Points, due date, and assignee.</p></article>
+        <article><h3>Ticket lifecycle</h3><p>Create, edit, clone, move between projects, change type or parent, apply bulk actions, and restore from the recycle bin.</p></article>
+        <article><h3>Links and history</h3><p>Blockers, related tickets, duplicates, and clones. Structured history records field and status changes.</p></article>
+      </div></div>
+      <div class="feature-group" id="planning"><div><p class="eyebrow">02 / Flow</p><h2>Planning</h2><p>Move from a personal view to the project board.</p></div><div class="feature-list">
+        <article><h3>Kanban board</h3><p>One board per project, columns tied to the fixed workflow, visual WIP limits, and drag-and-drop cards.</p></article>
+        <article><h3>Separate backlog</h3><p>A paginated list of planned work with manual ordering. Backlog tickets stay off the active board.</p></article>
+        <article><h3>Personal dashboard</h3><p>Assigned and watched tickets, upcoming due dates, recent activity, and a concise summary.</p></article>
+        <article><h3>Search and filters</h3><p>Search titles and descriptions. Filter by project, status, type, priority, and more, with quick choices on the board and backlog.</p></article>
+      </div></div>
+      <div class="feature-group" id="collaboration"><div><p class="eyebrow">03 / Team</p><h2>Collaboration</h2><p>Keep context beside the ticket, where it belongs.</p></div><div class="feature-list">
+        <article><h3>Comments and mentions</h3><p>A Markdown editor with live preview, @mentions with in-app notifications, and comment reactions.</p></article>
+        <article><h3>Attachments</h3><p>Upload files, place images in Markdown, and preview supported formats. Deleted attachments can be managed in the recycle bin.</p></article>
+        <article><h3>Watching and voting</h3><p>Users can watch or vote on a ticket themselves. Notifications cover assignments, mentions, and comments on watched work.</p></article>
+        <article><h3>Work logs</h3><p>Record time spent, a work date, and a Markdown-supported comment.</p></article>
+      </div></div>
+      <div class="feature-group" id="administration"><div><p class="eyebrow">04 / Operations</p><h2>Administration</h2><p>Control people, access, and data.</p></div><div class="feature-list">
+        <article><h3>Accounts and roles</h3><p>Administrators create accounts. Viewer, Member, and Admin project roles govern writes, alongside a global administrator role.</p></article>
+        <article><h3>API and tokens</h3><p>A versioned REST API under <code>/api/v1</code> and personal access tokens support scripts and integrations.</p></article>
+        <article><h3>Installation tools</h3><p>Audit log, active sessions, project archive, ticket CSV export, and backup and restore tools.</p></article>
+        <article><h3>Post-V1 additions</h3><p>Project custom fields, outbound webhooks, and optional SMTP delivery through a durable outbox processed by a separate command.</p></article>
+      </div></div>
+    </div></section>
+    <section class="cta-band"><div class="container cta-inner"><div><p class="eyebrow light">See the interface</p><h2>Explore the real application screens.</h2><p>See the board, backlog, and ticket detail in a demo installation.</p></div><a class="button button-primary" href="tour.html">Open the tour →</a></div></section>
+  </main>
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">TH</span><span>Ticket Hub</span></a><p>Self-hosted ticket tracking for software teams. Open source under the MIT license.</p></div>
+      <div><h2>Explore</h2><ul><li><a href="features.html">Features</a></li><li><a href="tour.html">Tour</a></li><li><a href="deployment.html">Deployment</a></li></ul></div>
+      <div><h2>Project</h2><ul><li><a href="about.html">About</a></li><li><a href="https://github.com/robertvokac/ticket-hub">GitHub ↗</a></li><li><a href="https://github.com/robertvokac/ticket-hub/blob/main/LICENSE">MIT license ↗</a></li></ul></div>
+    </div>
+    <div class="container footer-bottom">© 2026 Ticket Hub · Open source · MIT license</div>
+  </footer>
+</body>
+</html>

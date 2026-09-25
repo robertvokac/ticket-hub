@@ -1,5 +1,44 @@
 # Verification record
 
+## 2026-09-25 — GitHub Pages publishing workflow
+
+- Compared `../lexicon/.github/workflows/pages.yml` with Ticket Hub's branch and directory layout.
+  The Ticket Hub repository's GitHub metadata reports `develop` as the default branch.
+- The new workflow validates the static presentation site, uploads `web/` as the Pages artifact, and
+  deploys through `actions/deploy-pages@v4` with the required Pages and OIDC permissions.
+- The owner unarchived the repository after the workflow was prepared. The connected GitHub account
+  has push access but no administrator access, so GitHub Pages source/custom-domain settings cannot be
+  changed from this session. The intended domain is `tickethub.robertvokac.com`; DNS was reported as
+  already configured by the owner but could not be checked here.
+- No database migration or product runtime change was made in this batch.
+
+## 2026-09-25 — Application UI move and static presentation site
+
+- Before editing: the existing SQLite/server build completed and all 11 baseline CTest suites passed.
+- After editing: the SQLite/server build completed; `ctest --test-dir build --output-on-failure` passed
+  12/12 suites, including the new static-presentation link/landmark check. The SQLite-only core/CLI
+  preset also built and passed 12/12 suites.
+- A live SQLite server, started from the repository root with no `TICKETHUB_WEB_ROOT` override, served
+  the original application shell at `/` and returned HTTP 200 for `/styles.css`, `/app.js`,
+  `/story-points.js`, and `/api/health`. This verifies that the new default points to
+  `ticket-hub-web/`, not the independent `web/` presentation site.
+- A local static HTTP server returned 200 for all five presentation pages, its CSS/JavaScript, and
+  representative screenshot assets. `cmake --install` placed the application UI under
+  `share/ticket-hub/ticket-hub-web` and did not install the presentation site in the Crow asset path.
+- After the language correction, all five pages and their local URLs are English. The site integrity
+  test checks image dimension attributes against the actual PNG headers (1440 × 900 for the copied
+  application screenshots). The CSS now uses natural image height with no forced aspect ratio, cropping,
+  or hover zoom.
+- The dual-adapter preset configured, but PostgreSQL adapter compilation stopped because this
+  environment has no `libpq-fe.h` development header; its old cached include path points to a removed
+  temporary directory. A fresh PostgreSQL-only configure also failed to find the PostgreSQL development
+  library/header pair, so PostgreSQL-only compilation was not possible here. Docker Compose
+  validation was also unavailable because the `docker` executable is not installed.
+- The Playwright suite was not run because its `node_modules` dependencies are absent in this checkout;
+  the available computer-use session also exposed no browser. No browser layout or interaction audit was
+  run. The presentation-site check covers local references,
+  anchors, document landmarks, language, and image alt text; it does not validate visual rendering.
+
 ## 2026-08-26 — Security audit remediation
 
 ### What changed

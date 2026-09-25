@@ -1,5 +1,9 @@
 # Scope status
 
+**2026-09-25 web layout:** `ticket-hub-web/` is the existing Crow application UI; `web/` is an
+independent static English presentation site. This is a repository layout and communication change, not
+an addition to the tracker feature set.
+
 The current build target is the **reduced-scope V1**:
 [../REDUCED_SCOPE_SPECIFICATION.md](../REDUCED_SCOPE_SPECIFICATION.md), roadmap in
 [REDUCED_SCOPE_ROADMAP.md](REDUCED_SCOPE_ROADMAP.md), and table catalog in

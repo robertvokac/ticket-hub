@@ -3,256 +3,114 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Ticket Hub — a lightweight Jira-like ticket tracker written in C++ with Crow.">
-  <title>Ticket Hub</title>
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/styles.css">
+  <meta name="description" content="Ticket Hub is a self-hosted tracker for software teams, with a Kanban board, backlog, collaboration, and a clear view of every ticket.">
+  <title>Tickets in one place — Ticket Hub</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="site.js"></script>
 </head>
 <body>
-  <div class="login-screen hidden" id="login-screen">
-    <form class="login-card" id="login-form">
-      <div class="brand">
-        <div class="brand-mark">TH</div>
-        <div>
-          <strong>Ticket Hub</strong>
-          <span>Sign in to continue</span>
-        </div>
-      </div>
-      <label>
-        Email
-        <input name="email" type="email" required autocomplete="username" autofocus>
-      </label>
-      <label>
-        Password
-        <input name="password" type="password" required autocomplete="current-password">
-      </label>
-      <div id="login-error" class="form-error hidden"></div>
-      <button class="primary-button" type="submit">Sign in</button>
-    </form>
-  </div>
-
-  <div class="app-shell hidden" id="app-shell">
-    <aside class="sidebar" id="sidebar">
-      <div class="brand">
-        <div class="brand-mark">TH</div>
-        <div>
-          <strong>Ticket Hub</strong>
-          <span>Ticket tracking</span>
-        </div>
-      </div>
-
-      <nav class="main-nav" aria-label="Main navigation">
-        <button class="nav-item active" data-view="dashboard"><span>⌂</span> Dashboard</button>
-        <button class="nav-item" data-view="board"><span>▦</span> Board</button>
-        <button class="nav-item" data-view="backlog"><span>☰</span> Backlog</button>
-        <button class="nav-item" data-view="tickets"><span>☷</span> Tickets</button>
-        <button class="nav-item" data-view="projects"><span>◆</span> Projects</button>
-        <button class="nav-item" data-view="account"><span>🔑</span> Account</button>
-        <button class="nav-item hidden" id="nav-audit" data-view="audit"><span>🛡</span> Audit log</button>
-        <button class="nav-item hidden" id="nav-attachment-bin" data-view="attachment-bin"><span>🗑</span> Attachment recycle bin</button>
-        <button class="nav-item hidden" id="nav-webhooks" data-view="webhooks"><span>🔗</span> Webhooks</button>
-        <button class="nav-item hidden" id="nav-outbox" data-view="outbox"><span>✉</span> Outbox</button>
-        <button class="nav-item hidden" id="nav-users" data-view="users"><span>👥</span> Users</button>
-      </nav>
-
-      <div class="sidebar-section">
-        <div class="sidebar-heading">Projects</div>
-        <div id="sidebar-projects" class="project-shortcuts"></div>
-      </div>
-
-      <div class="sidebar-footer">
-        <div class="avatar" id="current-user-avatar">?</div>
-        <div>
-          <strong id="current-user-name">—</strong>
-          <span id="current-user-email">—</span>
-        </div>
-        <button type="button" class="icon-button" id="logout-button" title="Sign out" aria-label="Sign out">⏻</button>
-      </div>
-    </aside>
-
-    <main class="main-content">
-      <header class="topbar">
-        <button class="icon-button mobile-only" id="menu-button" aria-label="Open navigation">☰</button>
-        <div class="global-search">
-          <span>⌕</span>
-          <input id="global-search" type="search" placeholder="Search tickets by key or summary" autocomplete="off">
-        </div>
-        <div class="topbar-actions">
-          <span id="backend-pill" class="backend-pill">connecting…</span>
-          <div class="notification-menu">
-            <button type="button" class="icon-button" id="notification-bell" title="Notifications" aria-label="Notifications">
-              🔔<span id="notification-badge" class="notification-badge hidden">0</span>
-            </button>
-            <div id="notification-panel" class="notification-panel hidden"></div>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Ticket Hub — home"><span class="brand-mark" aria-hidden="true">TH</span><span>Ticket Hub</span></a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation"><a href="index.html" aria-current="page">Home</a><a href="features.html">Features</a><a href="tour.html">Tour</a><a href="deployment.html">Deployment</a><a href="about.html">About</a><a class="nav-cta" href="https://github.com/robertvokac/ticket-hub">Source code ↗</a></nav>
+    </div>
+  </header>
+  <main id="main">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow light">Open source · self-hosted · MIT</p>
+          <h1>Every ticket.<br><span>One clear view.</span></h1>
+          <p class="lead">Ticket Hub helps software teams plan work, follow progress, and keep context close. It runs on your infrastructure and stays practical for everyday use.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="tour.html">Explore the app <span aria-hidden="true">→</span></a>
+            <a class="button button-outline" href="deployment.html">How to deploy</a>
           </div>
-          <button class="primary-button" id="create-button">＋ Create</button>
-          <button type="button" class="icon-button" id="shortcuts-button" title="Keyboard shortcuts (?)" aria-label="Keyboard shortcuts">⌨</button>
+          <p class="hero-note">Built for one team and its software projects. Accounts are created by an administrator.</p>
         </div>
-      </header>
-
-      <div class="update-banner hidden" id="update-banner" role="status"></div>
-
-      <section id="content" class="content" aria-live="polite">
-        <div class="loading-state">
-          <div class="spinner"></div>
-          <p>Loading Ticket Hub…</p>
-        </div>
-      </section>
-    </main>
-  </div>
-
-  <div class="modal-backdrop hidden" id="create-modal" role="dialog" aria-modal="true" aria-labelledby="create-title">
-    <form class="modal" id="create-form">
-      <div class="modal-header">
-        <div>
-          <span class="eyebrow">New work item</span>
-          <h2 id="create-title">Create ticket</h2>
-        </div>
-        <button type="button" class="icon-button" data-close-modal aria-label="Close">×</button>
+        <figure class="hero-visual">
+          <div class="browser-frame">
+            <div class="browser-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
+            <img src="assets/board.png" width="1440" height="900" alt="Ticket Hub Kanban board with Confirmed, In Progress, In Review, and Done columns" fetchpriority="high">
+          </div>
+          <span class="visual-tag" aria-hidden="true">Work in motion ↗</span>
+          <figcaption>Screenshot from a demo Ticket Hub installation.</figcaption>
+        </figure>
       </div>
-      <div class="form-grid">
-        <label>
-          Project
-          <select name="projectKey" id="create-project" required></select>
-        </label>
-        <label>
-          Ticket type
-          <select name="ticketTypeKey" id="create-ticket-type">
-            <option value="task">Task</option>
-            <option value="story">Story</option>
-            <option value="bug">Bug</option>
-            <option value="epic">Epic</option>
-            <option value="sub-task">Sub-task</option>
-          </select>
-        </label>
-        <label class="wide">
-          Summary
-          <input name="summary" maxlength="255" required placeholder="What needs to be done?">
-        </label>
-        <label class="wide">
-          Description
-          <textarea name="description" rows="6" placeholder="Add context, acceptance criteria, or reproduction steps"></textarea>
-        </label>
-        <label class="wide" id="create-parent-label">
-          <span id="create-parent-label-text">Epic</span>
-          <select name="parentTicketKey" id="create-parent"><option value="">None</option></select>
-        </label>
-        <label>
-          Priority
-          <select name="priorityKey">
-            <option value="highest">Highest</option>
-            <option value="high">High</option>
-            <option value="medium" selected>Medium</option>
-            <option value="low">Low</option>
-            <option value="lowest">Lowest</option>
-          </select>
-        </label>
-        <label>
-          Assignee
-          <select name="assigneeEmail"><option value="">Unassigned</option></select>
-        </label>
-        <label>
-          Story points
-          <select name="storyPoints" aria-describedby="create-story-points-help">
-            <option value="">Not estimated</option>
-            <option value="0">0 (no effort)</option>
-            <option value="0.25">0.25 (quarter a day)</option>
-            <option value="0.5">0.5 (half a day)</option>
-            <option value="1">1 (about one day)</option>
-            <option value="2">2 (about two days)</option>
-            <option value="3">3 (about three days)</option>
-            <option value="5">5 (about one week)</option>
-            <option value="8">8 (about two weeks)</option>
-            <option value="13">13 (about three weeks)</option>
-            <option value="20">20 (about one month)</option>
-            <option value="40">40 (about two months)</option>
-            <option value="100">100 (split the ticket)</option>
-          </select>
-          <span class="field-hint" id="create-story-points-help">Relative effort; the examples are approximate, not a deadline.</span>
-        </label>
-        <label>
-          Due date
-          <input name="dueDate" type="date">
-        </label>
-        <label class="wide">
-          Labels
-          <input name="labels" placeholder="backend, ui, documentation">
-        </label>
-        <label>
-          Component
-          <select name="componentName" id="create-component"><option value="">None</option></select>
-        </label>
-      </div>
-      <div class="form-grid" id="create-custom-fields"></div>
-      <div id="create-error" class="form-error hidden"></div>
-      <div class="modal-footer">
-        <button type="button" class="secondary-button" data-close-modal>Cancel</button>
-        <button type="submit" class="primary-button">Create ticket</button>
-      </div>
-    </form>
-  </div>
-
-  <div class="modal-backdrop hidden" id="project-modal" role="dialog" aria-modal="true" aria-labelledby="project-title">
-    <form class="modal" id="project-form">
-      <div class="modal-header">
-        <div>
-          <span class="eyebrow">Workspace</span>
-          <h2 id="project-title">New project</h2>
-        </div>
-        <button type="button" class="icon-button" data-close-modal aria-label="Close">×</button>
-      </div>
-      <div class="form-grid">
-        <label>
-          Key
-          <input name="key" maxlength="12" required placeholder="e.g. QA" style="text-transform:uppercase">
-        </label>
-        <label>
-          Name
-          <input name="name" maxlength="255" required placeholder="Project name">
-        </label>
-        <label class="wide">
-          Description
-          <textarea name="description" rows="4" placeholder="What is this project for?"></textarea>
-        </label>
-      </div>
-      <div id="project-error" class="form-error hidden"></div>
-      <div class="modal-footer">
-        <button type="button" class="secondary-button" data-close-modal>Cancel</button>
-        <button type="submit" class="primary-button">Create project</button>
-      </div>
-    </form>
-  </div>
-
-  <div class="drawer-backdrop hidden" id="ticket-drawer-backdrop"></div>
-  <aside class="ticket-drawer hidden" id="ticket-drawer" aria-label="Ticket details"></aside>
-
-  <div class="modal-backdrop hidden" id="shortcuts-modal" role="dialog" aria-modal="true" aria-labelledby="shortcuts-title">
-    <div class="modal">
-      <div class="modal-header">
-        <div>
-          <span class="eyebrow">Help</span>
-          <h2 id="shortcuts-title">Keyboard shortcuts</h2>
-        </div>
-        <button type="button" class="icon-button" data-close-modal aria-label="Close">×</button>
-      </div>
-      <table class="shortcuts-table">
-        <tbody>
-          <tr><td><kbd>c</kbd></td><td>Create ticket</td></tr>
-          <tr><td><kbd>/</kbd></td><td>Focus the search filter</td></tr>
-          <tr><td><kbd>?</kbd></td><td>Show this help</td></tr>
-          <tr><td><kbd>Esc</kbd></td><td>Close a dialog, drawer, or the mobile nav</td></tr>
-          <tr><td><kbd>&uarr;</kbd> <kbd>&darr;</kbd> <kbd>&larr;</kbd> <kbd>&rarr;</kbd></td><td>Move focus between board cards or table rows</td></tr>
-          <tr><td><kbd>Enter</kbd></td><td>Open the focused ticket</td></tr>
-          <tr><td><kbd>Shift</kbd>+click / <kbd>Shift</kbd>+<kbd>&uarr;</kbd>/<kbd>&darr;</kbd></td><td>Range-select rows on the Tickets screen</td></tr>
-        </tbody>
-      </table>
-      <div class="modal-footer">
-        <button type="button" class="secondary-button" data-close-modal>Close</button>
+    </section>
+    <div class="value-strip" aria-label="At a glance">
+      <div class="container">
+        <div class="value-item"><strong>Kanban + backlog</strong><span>Active and planned work</span></div>
+        <div class="value-item"><strong>PostgreSQL / SQLite</strong><span>Two database backends</span></div>
+        <div class="value-item"><strong>C++20 + Crow</strong><span>A focused server stack</span></div>
+        <div class="value-item"><strong>Vanilla web</strong><span>HTML, CSS, JavaScript</span></div>
       </div>
     </div>
-  </div>
-
-  <div id="toast" class="toast hidden" role="status"></div>
-  <script src="/app.js" type="module"></script>
+    <section class="section" aria-labelledby="workflow-heading">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Everyday work</p>
+          <h2 id="workflow-heading">From idea to done</h2>
+          <p class="lead">Create a ticket, add the details, and give the team a shared view of what is happening. Ticket Hub keeps the work and its context together.</p>
+        </div>
+        <div class="card-grid">
+          <article class="feature-card"><span class="icon" aria-hidden="true">01</span><h3>Capture the work</h3><p>Epics, Stories, Tasks, Bugs, and Sub-tasks follow a clear hierarchy. Markdown descriptions can include attachments, labels, priorities, and due dates.</p></article>
+          <article class="feature-card"><span class="icon" aria-hidden="true">02</span><h3>Move it forward</h3><p>A separate backlog and Kanban board distinguish planned work from tickets that are active, under review, or done.</p></article>
+          <article class="feature-card"><span class="icon" aria-hidden="true">03</span><h3>Keep the decisions</h3><p>Comments, mentions, change history, and ticket links preserve context where the work happens.</p></article>
+        </div>
+      </div>
+    </section>
+    <section class="section section-soft">
+      <div class="container split">
+        <div>
+          <p class="eyebrow">The full picture</p>
+          <h2>Everything important on one ticket</h2>
+          <p class="lead">Status, ownership, comments, work logs, and history each have their place. Old ticket keys remain resolvable after a move between projects.</p>
+          <ul class="check-list">
+            <li>Markdown descriptions, checklists, and attachments</li>
+            <li>Links for dependencies and related tickets</li>
+            <li>History of real field and status changes</li>
+          </ul>
+          <a class="text-link" href="features.html">See all features →</a>
+        </div>
+        <figure class="image-card">
+          <img src="assets/ticket-detail.png" width="1440" height="900" loading="lazy" alt="Ticket Hub ticket detail with fields, comments, and activity history">
+          <figcaption>Ticket detail in a demo project.</figcaption>
+        </figure>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container split reverse">
+        <div>
+          <p class="eyebrow">Your infrastructure</p>
+          <h2>Run it on your own terms</h2>
+          <p class="lead">Ticket Hub is built for a single self-hosted installation. The supported production path uses Docker Compose with PostgreSQL. SQLite offers the same user-facing features for a single-process setup.</p>
+          <p>Administrators create accounts, fixed project roles control editing, and the source code is available under the MIT license.</p>
+          <a class="text-link" href="deployment.html">Read the deployment guide →</a>
+        </div>
+        <figure class="image-card">
+          <img src="assets/backlog.png" width="1440" height="900" loading="lazy" alt="Separate Backlog screen with ticket list and filters">
+          <figcaption>The backlog has its own paginated screen.</figcaption>
+        </figure>
+      </div>
+    </section>
+    <section class="cta-band">
+      <div class="container cta-inner">
+        <div><p class="eyebrow light">See the product</p><h2>Take a closer look at Ticket Hub.</h2><p>Real application screens and a clear account of what it does today.</p></div>
+        <a class="button button-primary" href="tour.html">Open the tour <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">TH</span><span>Ticket Hub</span></a><p>Self-hosted ticket tracking for software teams. Open source under the MIT license.</p></div>
+      <div><h2>Explore</h2><ul><li><a href="features.html">Features</a></li><li><a href="tour.html">Tour</a></li><li><a href="deployment.html">Deployment</a></li></ul></div>
+      <div><h2>Project</h2><ul><li><a href="about.html">About</a></li><li><a href="https://github.com/robertvokac/ticket-hub">GitHub ↗</a></li><li><a href="https://github.com/robertvokac/ticket-hub/blob/main/LICENSE">MIT license ↗</a></li></ul></div>
+    </div>
+    <div class="container footer-bottom">© 2026 Ticket Hub · Open source · MIT license</div>
+  </footer>
 </body>
 </html>

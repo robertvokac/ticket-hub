@@ -1,7 +1,7 @@
 # Official Docker image (D50): the only supported distribution path for
 # V1 -- no .deb/.rpm, no Helm/Kubernetes. Two stages: build with the full
 # toolchain (including a network-fetched Crow via CMake FetchContent), then
-# copy only the installed binary/web/migrations into a slim runtime image
+# copy only the installed binary/app assets/migrations into a slim runtime image
 # with just the shared libraries the binary links against.
 
 FROM debian:bookworm-slim AS build
@@ -35,13 +35,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY --from=build /opt/ticket-hub /opt/ticket-hub
 COPY docker-entrypoint.sh /opt/ticket-hub/bin/docker-entrypoint.sh
 
-# Compiled-in defaults for TICKETHUB_WEB_ROOT/MIGRATIONS_ROOT point at the
-# *build machine's* source checkout (see src/config/Config.cpp), which does
-# not exist in this image -- must be overridden explicitly to the installed
-# locations. TICKETHUB_ATTACHMENTS_DIR similarly defaults to a
-# cwd-relative path; pointed here at a dedicated volume mount point (D15:
-# local filesystem attachment storage only).
-ENV TICKETHUB_WEB_ROOT=/opt/ticket-hub/share/ticket-hub/web \
+# Runtime defaults are cwd-relative; the image points them at the installed
+# application assets and migrations. Attachments use a dedicated volume.
+ENV TICKETHUB_WEB_ROOT=/opt/ticket-hub/share/ticket-hub/ticket-hub-web \
     TICKETHUB_MIGRATIONS_ROOT=/opt/ticket-hub/share/ticket-hub/migrations \
     TICKETHUB_ATTACHMENTS_DIR=/data/attachments \
     TICKETHUB_BIND_ADDRESS=0.0.0.0 \

@@ -1,5 +1,19 @@
 # Ticket Hub next work
 
+**2026-09-25 — presentation-site publishing (workflow prepared; activation pending).**
+`.github/workflows/pages.yml` now validates and publishes only `web/` from `develop`, following the
+neighboring Lexicon repository's Pages workflow. The intended domain is
+`tickethub.robertvokac.com`. The owner unarchived the repository; the available GitHub connection has
+no administrator permission. An administrator must select GitHub Actions as the Pages source and save
+the custom domain in repository settings. A push to `develop` will trigger deployment; live deployment
+has not been verified.
+
+**2026-09-25 — web directory split (done).** The Crow application assets moved from `web/` to
+`ticket-hub-web/`, with matching runtime, CMake install, Docker, Compose, and E2E paths. A separate
+five-page English presentation site now lives in `web/`, using only static HTML, CSS, and vanilla
+JavaScript. No product behavior or database schema changed. Pages activation is the remaining follow-up
+for this user-requested site work.
+
 **2026-08-26 — security audit remediation (done).** An external security audit of the network-facing
 surface reported 16 findings (2 critical, 3 high, 5 medium, 6 low); four were reproduced against a
 running server before any fix. All 16 are fixed, with three new test suites and four extended ones

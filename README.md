@@ -5,6 +5,25 @@ Ticket Hub is a self-hosted Jira-like Software ticket tracker written in C++20. 
 License: MIT.  
 Main namespace: `TicketHub`.
 
+## Web directories
+
+- [`ticket-hub-web/`](ticket-hub-web/) contains the Crow-served application UI. Local runs use it by
+  default through `TICKETHUB_WEB_ROOT=./ticket-hub-web`; CMake installs it under
+  `share/ticket-hub/ticket-hub-web`.
+- [`web/`](web/) is a separate English-language presentation site, made from static HTML, CSS, and vanilla
+  JavaScript. It does not replace the application or connect to its API. To preview it locally, run
+  `python3 -m http.server 8000 --directory web` and open `http://127.0.0.1:8000/`.
+
+The [Pages workflow](.github/workflows/pages.yml) publishes only `web/` from the `develop` branch to
+GitHub Pages, automatically after changes to the site or workflow and on manual dispatch. The intended
+address is `https://tickethub.robertvokac.com/`. In the repository's **Settings → Pages**, select
+**GitHub Actions** as the publishing source and set **Custom domain** to
+`tickethub.robertvokac.com`. DNS is managed separately. With an Actions publishing source GitHub ignores
+`CNAME` files; the custom domain must be saved in Pages settings.
+
+Historical batch notes later in this README use the old `web/` name for the application UI; those paths
+now live in `ticket-hub-web/`.
+
 ## Screenshots
 
 Captured with Playwright/Chromium against a freshly seeded SQLite database (`demo` data), logged in as a
@@ -282,7 +301,7 @@ TICKETHUB_DB_DRIVER=sqlite ./build-core/ticket-hub-cli restore ./backups/2026-08
 TICKETHUB_DB_DRIVER=sqlite ./build-core/ticket-hub-cli process-outbox
 ```
 
-`diagnostics` redacts the PostgreSQL connection string. `TICKETHUB_MIGRATIONS_ROOT` (like `TICKETHUB_WEB_ROOT`/`TICKETHUB_ATTACHMENTS_DIR`) defaults to a path relative to the current working directory, so run the binary from the directory that has `migrations/`/`web/` next to it (the repo root for a dev build, or the `cmake --install` prefix for an installed tree) -- or set the variable explicitly if you run it from elsewhere.
+`diagnostics` redacts the PostgreSQL connection string. `TICKETHUB_MIGRATIONS_ROOT` (like `TICKETHUB_WEB_ROOT`/`TICKETHUB_ATTACHMENTS_DIR`) defaults to a path relative to the current working directory, so run the binary from the directory that has `migrations/`/`ticket-hub-web/` next to it (the repo root for a dev build, or the `cmake --install` prefix for an installed tree) -- or set the variable explicitly if you run it from elsewhere.
 
 `backup`/`restore` (D106-D108, Phase 7) are offline/maintenance-window operations -- stop the server first;
 neither command checks whether it is still running. `backup <output-directory>` copies the attachments
@@ -405,7 +424,7 @@ build and run normally in any environment with ordinary Docker Hub network acces
 | `TICKETHUB_AUTO_MIGRATE` | `true` | discover/apply schema migrations |
 | `TICKETHUB_SEED_DEMO` | `false` | apply idempotent demo data. **Creates a global administrator with a password published in this repository** -- the server refuses to start if this is `true` while `TICKETHUB_BIND_ADDRESS` is not a loopback address |
 | `TICKETHUB_ALLOW_UNSAFE_DEMO_SEED` | `false` | acknowledge and bypass the guard above. Only for a container that binds `0.0.0.0` internally while publishing its port to the host loopback |
-| `TICKETHUB_WEB_ROOT` | `./web` (cwd-relative) | static web root |
+| `TICKETHUB_WEB_ROOT` | `./ticket-hub-web` (cwd-relative) | Crow application UI root; unrelated to the presentation site in `web/` |
 | `TICKETHUB_MIGRATIONS_ROOT` | `./migrations` (cwd-relative) | backend migration root |
 | `TICKETHUB_ATTACHMENTS_DIR` | `./data/attachments` (cwd-relative) | local filesystem attachment storage root (D15) -- point this at a persistent, backed-up volume in a real deployment |
 | `TICKETHUB_ATTACHMENTS_MAX_TOTAL_BYTES` | `10737418240` (10 GiB) | installation-wide ceiling on stored attachment bytes; `0` disables the check. Recycle-bin attachments count, since their files stay on disk until a permanent delete |

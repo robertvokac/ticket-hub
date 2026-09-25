@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Ticket Hub is an open-source, self-hosted ticket tracker built with C++20, Crow, and a vanilla HTML, CSS, and JavaScript interface.">
+  <title>About the project — Ticket Hub</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="site.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Ticket Hub — home"><span class="brand-mark" aria-hidden="true">TH</span><span>Ticket Hub</span></a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation"><a href="index.html">Home</a><a href="features.html">Features</a><a href="tour.html">Tour</a><a href="deployment.html">Deployment</a><a href="about.html" aria-current="page">About</a><a class="nav-cta" href="https://github.com/robertvokac/ticket-hub">Source code ↗</a></nav>
+    </div>
+  </header>
+  <main id="main">
+    <section class="page-hero"><div class="container"><p class="eyebrow light">Open source project</p><h1>Ticket tracking with clear boundaries</h1><p class="lead">A self-hosted tracker for one internal software team. One installation, a straightforward operating model, and source code you can inspect.</p></div></section>
+    <section class="section"><div class="container split"><div><p class="eyebrow">Who it is for</p><h2>Built for team work</h2><p class="lead">Ticket Hub covers software projects, a fixed ticket hierarchy, and a fixed workflow. Project roles determine who can make changes; authenticated users can browse active projects.</p><p>A self-hosted installation gives administrators control over accounts, the database, attachments, and deployment. Optional anonymous read access is off by default.</p></div><figure class="image-card"><img src="assets/board.png" width="1440" height="900" loading="lazy" alt="Ticket Hub Kanban board in a demo project"><figcaption>A project Kanban board.</figcaption></figure></div></section>
+    <section class="section section-soft"><div class="container"><div class="section-head"><p class="eyebrow">Technical foundation</p><h2>Few layers, clear responsibilities</h2><p>The server is a modular monolith. Domain rules and application operations are separated from database adapters and HTTP routes.</p></div><dl class="fact-grid"><div class="fact"><dt>Server</dt><dd>C++20 and Crow</dd></div><div class="fact"><dt>Web application</dt><dd>HTML, CSS, vanilla JavaScript</dd></div><div class="fact"><dt>Databases</dt><dd>PostgreSQL and SQLite</dd></div><div class="fact"><dt>License</dt><dd>MIT</dd></div></dl></div></section>
+    <section class="section"><div class="container split"><div><p class="eyebrow">Current scope</p><h2>Know what is included</h2><p>Ticket Hub includes Kanban, a backlog, fixed roles and workflow, Markdown, attachments, a REST API, and administration tools. Post-V1 additions include custom fields, outbound webhooks, and optional SMTP delivery.</p><p>It does not offer Scrum sprints, a configurable workflow, OIDC sign-in, or a SQLite-to-PostgreSQL migration tool. The repository documents the current features and operational limits.</p><div class="hero-actions"><a class="button button-blue" href="features.html">Explore features</a><a class="button button-light-outline" href="https://github.com/robertvokac/ticket-hub/blob/main/README.md">Read the README ↗</a></div></div><div class="aside-note"><strong>The repository is the source of truth</strong><p>These pages summarize the project. For deployment and administration, follow the current <a href="https://github.com/robertvokac/ticket-hub/blob/main/README.md">README</a> and <a href="https://github.com/robertvokac/ticket-hub/blob/main/docs/DEPLOYMENT.md">deployment guide</a>.</p></div></div></section>
+    <section class="cta-band"><div class="container cta-inner"><div><p class="eyebrow light">Source code</p><h2>Explore Ticket Hub on GitHub.</h2><p>Implementation, tests, documentation, and decision history are in one repository.</p></div><a class="button button-primary" href="https://github.com/robertvokac/ticket-hub">Open the repository ↗</a></div></section>
+  </main>
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">TH</span><span>Ticket Hub</span></a><p>Self-hosted ticket tracking for software teams. Open source under the MIT license.</p></div>
+      <div><h2>Explore</h2><ul><li><a href="features.html">Features</a></li><li><a href="tour.html">Tour</a></li><li><a href="deployment.html">Deployment</a></li></ul></div>
+      <div><h2>Project</h2><ul><li><a href="about.html">About</a></li><li><a href="https://github.com/robertvokac/ticket-hub">GitHub ↗</a></li><li><a href="https://github.com/robertvokac/ticket-hub/blob/main/LICENSE">MIT license ↗</a></li></ul></div>
+    </div>
+    <div class="container footer-bottom">© 2026 Ticket Hub · Open source · MIT license</div>
+  </footer>
+</body>
+</html>
